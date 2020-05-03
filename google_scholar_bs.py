@@ -3,24 +3,27 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-sleep_time = 0.2
+sleep_time = 1
 
 
 class GoogleScholarBS:
     def __init__(self, main_url, headers, proxy):
+
+        self.session = requests.Session()
+
         self.main_url = main_url
         self.headers = headers
 
         if proxy is None:
             self.proxies = None
-            page = requests.get(main_url, headers=headers)
+            page = self.session.get(main_url, headers=headers)
         else:
             self.proxies = {
                 "http": f"{proxy}",
                 "https": f"{proxy}",
             }
 
-            page = requests.get(main_url, headers=headers, proxies=self.proxies)
+            page = self.session.get(main_url, headers=headers, proxies=self.proxies)
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -61,7 +64,7 @@ class GoogleScholarBS:
         #     json.dump(self.citation_urls, json_file, indent=4)
 
     def scrape_citation_page(self, index, page_url):
-        page = requests.get(page_url, headers=self.headers)
+        page = self.session.get(page_url, headers=self.headers)
         soup = BeautifulSoup(page.content, "html.parser")
 
         url_list = []
@@ -70,7 +73,7 @@ class GoogleScholarBS:
         print(page_url)
 
         with open("output1.html", "w") as file:
-            file.write(str(soup))
+            file.write(str(soup).replace(u'\xa0', u''))
 
         # get all pages first
         # navigation = soup.find('div', {"id": "gs_n"})
@@ -97,8 +100,8 @@ class GoogleScholarBS:
 
         self.papers[index]["Citations"] = citation_titles
 
-        # with open('citation_titles.json', 'w') as json_file:
-        #     json.dump(self.citation_titles, json_file, indent=4)
+        with open('citation_titles.json', 'w') as json_file:
+            json.dump(self.citation_titles, json_file, indent=4)
 
     def scrape_all(self):
         for index, citation_url in enumerate(self.citation_urls):

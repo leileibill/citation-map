@@ -15,3 +15,6 @@ class GoogleScholarElenium:
     def click_cancel_on_paper_page(self):
         close_button = self.driver.find_element_by_id("gs_md_cita-d-x")
         close_button.click()
+
+    def click_citation_on_main_page(self):
+        

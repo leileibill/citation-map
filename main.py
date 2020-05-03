@@ -12,6 +12,7 @@ from google_scholar_elenium import GoogleScholarElenium
 
 user_agent_list = [
     # Chrome
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
     "Mozilla/5.0 (Windows NT 5.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
@@ -42,22 +43,27 @@ user_agent_list = [
 gsc_url = "https://scholar.google.com/citations?hl=en&user=HvcCKEcAAAAJ"
 
 # Beautiful soup
-headers = {"User-Agent": f"{user_agent_list[2]}"}
+headers = {"User-Agent": f"{user_agent_list[0]}"}
 
 
 if __name__ == "__main__":
-    proxies = proxy.get_proxies()
+    # proxies = proxy.get_proxies()
+
+    # prox = {
+    # 'http': 'http://178.128.53.246:8080',
+    # 'https': 'http://178.128.53.246:8080',
+    # }
 
     # import pdb; pdb.set_trace()
 
-    gsc_bs = GoogleScholarBS(gsc_url, headers, None)
+    # gsc_bs = GoogleScholarBS(gsc_url, headers, '178.128.53.246:8080')
 
     # one_url = gsc_bs.citation_urls[0]
     # gsc_bs.scrape_citation_page(0, one_url)
 
-    gsc_bs.scrape_all()
+    # gsc_bs.scrape_all()
 
     # Elenium
-    # gsc_elenium = GoogleScholarElenium(gsc_url)
+    gsc_elenium = GoogleScholarElenium(gsc_url)
     # gsc.click_title_on_main_page(title_text)
     # gsc.click_cancel_on_paper_page()
