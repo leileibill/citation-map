@@ -3,5 +3,6 @@ black
 
 requests
 bs4
-pandas 
+pandas
 selenium
+lxml
