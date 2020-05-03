@@ -1,0 +1,7 @@
+pylint
+black
+
+requests
+bs4
+pandas 
+selenium
